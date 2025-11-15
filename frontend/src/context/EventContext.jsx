@@ -61,16 +61,23 @@ const EventContext = createContext();
 export const EventProvider = ({ children }) => {
   // ... state declarations remain the same ...
 
-  const fetchEvents = async () => {
+  // frontend/src/context/EventContext.jsx (CRITICAL FIX)
+
+const fetchEvents = async () => {
     setLoading(true);
     setError(null);
     try {
-      console.log('Fetching events from API:', API_URL);
+      const response = await axios.get(API_URL);
+      const data = response.data;
       
-      // Use the environment variable here
-      const response = await axios.get(API_URL); 
-      
-      setEvents(response.data); 
+      // 🎯 CRITICAL CHECK: Ensure the received data is an array
+      if (Array.isArray(data)) {
+        setEvents(data); // Set state ONLY if it is an array
+      } else {
+        // If the API returns an object or something else, treat it as empty data
+        console.warn("API response was not a valid array:", data);
+        setEvents([]); 
+      }
       
     } catch (err) {
       setError('Failed to fetch events from the server.');
@@ -79,7 +86,7 @@ export const EventProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+};
 
   // ... rest of the component remains the same ...
 };
