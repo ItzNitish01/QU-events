@@ -43,6 +43,8 @@ const connectDB = async (mongoUri) => {
 app.get('/', (req, res) => {
     res.status(200).json({ 
         message: 'QU-events API is running!',
+        // 🎯 Ensure this line is present to read the environment variable:
+        environment: process.env.NODE_ENV || 'development' 
     });
 });
 
