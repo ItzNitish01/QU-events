@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios'; 
 
 // Get API URL from Vite's environment variables
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/events';
 
 const EventContext = createContext();
 

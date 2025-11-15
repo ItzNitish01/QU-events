@@ -1,0 +1,90 @@
+/* frontend/src/AdminDashboard.css */
+.admin-dashboard-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+.admin-dashboard-container h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: #cc0000; /* Admin color */
+}
+
+.admin-dashboard-container p {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+/* Tabs */
+.admin-tabs {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.admin-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s, border-bottom 0.3s;
+    font-weight: 500;
+}
+
+.admin-tabs button.active {
+    color: #cc0000;
+    border-bottom: 3px solid #cc0000;
+    font-weight: 600;
+}
+
+/* Content Items */
+.admin-item {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.admin-item h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+}
+
+.admin-item p {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Action Buttons */
+.action-buttons button {
+    padding: 8px 12px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.approve-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.reject-btn, .delete-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.change-role-btn {
+    background-color: #ff9800; /* Orange */
+    color: white;
+}
