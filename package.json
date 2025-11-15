@@ -1,8 +1,7 @@
 {
   "name": "qu-events-monorepo",
   "version": "1.0.0",
-  "description": "QU-events Monorepo",
-  "main": "index.js",
+  "description": "QU-events Monorepo (Root configuration for Vercel)",
   "scripts": {
     "postinstall": "cd frontend && npm install",
     "build": "cd frontend && npm run build"

@@ -1,6 +1,5 @@
-// backend/server.js (CORRECTED VERSION)
+// backend/server.js
 
-// 1. Load environment variables first
 require('dotenv').config(); 
 const express = require('express');
 const cors = require('cors');
@@ -13,13 +12,13 @@ const eventRoutes = require('./routes/eventRoutes');
 const app = express();
 
 // --- Middleware ---
-// Get the allowed origin from environment variables, or use development default
+// CORS Configuration: Uses CLIENT_ORIGIN from environment variables
 const allowedOrigin = process.env.NODE_ENV === 'production' 
-    ? process.env.CLIENT_ORIGIN // e.g., 'https://quevents.vercel.app'
+    ? process.env.CLIENT_ORIGIN
     : 'http://localhost:5173'; 
 
 app.use(cors({
-    origin: allowedOrigin, // 🎯 Use the dynamically set origin
+    origin: allowedOrigin,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
@@ -43,7 +42,6 @@ const connectDB = async (mongoUri) => {
 app.get('/', (req, res) => {
     res.status(200).json({ 
         message: 'QU-events API is running!',
-        // 🎯 Ensure this line is present to read the environment variable:
         environment: process.env.NODE_ENV || 'development' 
     });
 });
@@ -53,12 +51,11 @@ app.use('/api/events', eventRoutes);
 
 // --- Start the Server Function ---
 const startServer = async () => {
-    // 🎯 FIX: Read variables inside the function scope to ensure they are loaded
+    // Read variables inside the function scope to ensure they are loaded
     const PORT = process.env.PORT || 5000;
     const MONGO_URI = process.env.MONGO_URI;
 
     if (MONGO_URI) {
-        // Pass the URI to connectDB
         await connectDB(MONGO_URI); 
     } else {
         console.log('--- WARNING: MONGO_URI not found in .env. Cannot connect to DB. ---');
@@ -69,5 +66,4 @@ const startServer = async () => {
     });
 };
 
-// Start the server
 startServer();

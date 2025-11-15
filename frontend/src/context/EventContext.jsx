@@ -1,80 +1,31 @@
-// frontend/src/context/EventContext.jsx (UPDATED)
-
-/*import React, { createContext, useState, useContext } from 'react';
-import axios from 'axios'; // 👈 Import Axios
-
-// 1. Create the Context
-const EventContext = createContext();
-
-// 2. Create the Provider Component
-export const EventProvider = ({ children }) => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // 🎯 Fetch function now uses Axios
-  const fetchEvents = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      console.log('Fetching events from API...');
-      
-      // Use the base URL for the backend API
-      const response = await axios.get('http://localhost:5000/api/events');
-      
-      // The API returns an array of event objects
-      setEvents(response.data); 
-      
-    } catch (err) {
-      setError('Failed to fetch events from the server.');
-      console.error('API Fetch Error:', err.message);
-      // In case of an empty DB, we can set a dummy array to show something
-      setEvents([]); 
-    } finally {
-      setLoading(false);
-    }
-  };
-  // ... rest of the provider code ...
-
-  return (
-    <EventContext.Provider value={{ events, loading, error, fetchEvents }}>
-      {children}
-    </EventContext.Provider>
-  );
-};
-
-// 3. Custom hook to use the context (remains unchanged)
-export const useEvents = () => {
-  return useContext(EventContext);
-};
-*/
-// frontend/src/context/EventContext.jsx (UPDATED with ENV variable)
+// frontend/src/context/EventContext.jsx
 
 import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios'; 
 
-// 🎯 Get API URL from Vite's environment variables
+// Get API URL from Vite's environment variables
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 const EventContext = createContext();
 
 export const EventProvider = ({ children }) => {
-  // ... state declarations remain the same ...
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // frontend/src/context/EventContext.jsx (CRITICAL FIX)
-
-const fetchEvents = async () => {
+  const fetchEvents = async () => {
     setLoading(true);
     setError(null);
     try {
+      console.log('Fetching events from API:', API_URL);
+      
       const response = await axios.get(API_URL);
       const data = response.data;
       
-      // 🎯 CRITICAL CHECK: Ensure the received data is an array
+      // CRITICAL FIX: Ensure the received data is an array
       if (Array.isArray(data)) {
-        setEvents(data); // Set state ONLY if it is an array
+        setEvents(data); 
       } else {
-        // If the API returns an object or something else, treat it as empty data
         console.warn("API response was not a valid array:", data);
         setEvents([]); 
       }
@@ -86,9 +37,13 @@ const fetchEvents = async () => {
     } finally {
       setLoading(false);
     }
-};
+  };
 
-  // ... rest of the component remains the same ...
+  return (
+    <EventContext.Provider value={{ events, loading, error, fetchEvents }}>
+      {children}
+    </EventContext.Provider>
+  );
 };
 
 export const useEvents = () => {
